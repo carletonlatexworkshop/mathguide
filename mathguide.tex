@@ -12,4 +12,66 @@
 \begin{document}
 \maketitle
 
+One of \LaTeX{}'s most important and widely-known features is its exceptional math typesetting.
+Once you have the hang of it, you can easily typeset complex equations:
+\begin{subequations}
+  \label{eq:gcidef}
+  \begin{align}
+    Z_{\mathcal{F}}^{\Gamma} (\gamma) &= \sum_{\substack{n \geq 0 \\ \sigma \in \mathfrak{S}_{n}}} \frac{1}{n!} \left\lvert \operatorname{fix} \mathcal{F} [\sigma \cdot \gamma] \right\rvert p_{1}^{\sigma_{1}} p_{2}^{\sigma_{@}} \dots p_{n}^{\sigma_{n}} \label{eq:gcidefperm} \\
+    &= \sum_{\substack{n \geq 0 \\ \lambda \vdash n}} \frac{\left\lvert \operatorname{fix} \mathcal{F} [\sigma(\lambda) \cdot \gamma] \right\rvert}{z_{\lambda}} p_{1}^{\lambda_{1}} p_{2}^{\lambda_{2}} \dots p_{n}^{\lambda_{n}}. \label{eq:gcidefpart}
+  \end{align}
+\end{subequations}
+You can also include mathematics within the flow of your sentences; for example, we might let $x = \sqrt{17 - \alpha^{2}}$.
+But how is all this done?
+
+\section{Preliminaries}
+This guide will be most useful to you if you work along in your own \LaTeX{} document.
+\inst{Download one of the Carleton templates and make sure that you are able to compile with it before you continue.}
+(If you haven't already worked through the \enquote{Getting started with \LaTeX{}} guide, do that first!)
+
+Now that you have a document ready to go, let's typeset some math.
+First, we should note that \LaTeX{} has two different basic ways to handle mathematical expressions:
+\begin{description}
+\item[Display math]
+  is broken out on its own line (as in \cref{eq:gcidefperm,eq:gcidefpart}).
+  It is generally set large and with ample space.
+
+\item[Inline math]
+  occurs within a line, as when we set $x = \sqrt{17 - \alpha^{2}}$ above.
+  It is set fairly small and with tight spacing to fit within a line.
+\end{description}
+
+Any mathematical expression can be used either inline or display, but in practice it's best to use inline math for short, simple expressions that fit syntactically and logically into the flow of a sentence and to use display math for larger, more complex expressions that stand alone.
+
+\section{How to enter math mode}
+To write an inline math expression, you'll type your math code within a pair of \code{\$} symbols, known as \enquote{math delimiters}.
+Try it yourself!
+\inst{Update your document to indicate that $1 + 1 = 2$ by adding the following:}
+\begin{verbatim}
+Everyone knows that $1 + 1 = 2$.
+\end{verbatim}
+The result should look like this:
+\begin{quote}
+  Everyone knows that $1 + 1 = 2$.
+\end{quote}
+
+Note that the \enquote{.} is \emph{outside} the math delimiters but that the whole mathematical expression is inside them.
+This is the standard practice, because the whole expression \enquote{$1 + 1 = 2$} represents a single mathematical statement but the \enquote{.} is punctuation which is part of the \emph{sentence}, not the math.
+
+There are a lot of different ways to get into display mode, but the simplest is to use the \code{equation} or \code{equation*}\footnote{In lieu of \code{\textbackslash{}begin\{equation*\}} and \code{\textbackslash{}end\{equation\}}, you can use the shorthand \code{\textbackslash{}[} and \code{\textbackslash{}]}.} environment.
+(The unstarred version \code{equation} gives your equation a number, as was done for \cref{eq:gcidefperm,eq:gcidefpart} above, while the starred version \code{equation*} leaves it un-numbered.)
+Try it yourself!
+\inst{Update your document with a display-mode equation by adding the following:}
+\begin{verbatim}
+\begin{equation*}
+(1 + x)^{n} = \sum_{k = 0}^{n} \binom{n}{k} x^{k}
+\end{equation*}
+\end{verbatim}
+The result should look like this:
+\begin{equation*}
+(1 + x)^{n} = \sum_{k = 0}^{n} \binom{n}{k} x^{k}
+\end{equation*}
+
+\inst{Now try removing the \code{*} symbols from \emph{both} occurences of \code{equation*} and recompiling.}
+The equation should now be numbered.
 \end{document}
