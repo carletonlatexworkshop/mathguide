@@ -102,7 +102,8 @@ There are many thousands of symbols available to you in \LaTeX{}, so we won't co
   $\alpha, \beta, \pi, \dots$ & \code{\textbackslash{}alpha}, \code{\textbackslash{}beta}, \code{\textbackslash{}pi}, \dots & $x^{n}, x_{n}$ & \code{x\textasciicircum{}\{n\}}, \code{x\_\{n\}} \\
   $\overline{z^{2} - 1}$ & \code{\textbackslash{}overline\{z\textasciicircum{}\{2\} - 1\}} & $\{ x \mid y \}$ & \code{\textbackslash{}\{ x \textbackslash{}mid y \textbackslash{}\}} \\
   $\mathbf{R}, \mathbb{R}$ & \code{\textbackslash{}mathbf\{R\}}, \code{\textbackslash{}mathbb\{R\}} & $\mathfrak{R}, \mathcal{R}$ & \code{\textbackslash{}mathfrak\{R\}}, \code{\textbackslash{}mathcal\{R\}} \\
-  $\infty$ & \code{\textbackslash{}infty} & $\dots$ & \code{\textbackslash{}dots} \\
+  $\infty$ & \code{\textbackslash{}infty} & $\dots$ & \code{\textbackslash{}dots} (automatic height) \\
+  $\vdots, \ddots$ & \code{\textbackslash{}vdots}, \code{\textbackslash{}ddots} & $\cdots, \ldots$ & \code{\textbackslash{}cdots}, \code{\textbackslash{}ldots} (manual height) \\
  \bottomrule
 \end{tabular}
 \caption{Collection of common \LaTeX{} math symbols and commands}
@@ -174,4 +175,139 @@ The resulting output looks like this:
     \sum_{y} \left( \sum_{x} x P \left( X = x \mid Y = y \right) \right) P \left( Y = y \right)
   \end{equation*}
 \end{enumerate}
+
+\section{Advanced math modes}
+There are many different modes for typesetting display math in \LaTeX{}.
+These include techniques for setting multi-line equations, for marking up equations, for setting arrays and matrices, for multi-line subscripts, and more.
+
+\subsection{Multi-line equations}
+From time to time, you may want to set a multi-line equation like \cref{eq:gcidef} above.
+This can be done using several different environments, depending on your goals:
+\begin{table}[htb]
+  \centering
+  \begin{tabular}{c c}
+    \toprule
+    Environment & Application \\ \midrule
+    \code{align} and \code{align*} & aligning elements in several lines \\
+    \code{multline} and \code{multline*} & a single long expression split onto several lines \\
+    \code{gather} and \code{gather*} & several expressions, each centered vertically \\
+    \bottomrule
+  \end{tabular}
+  \caption{Types of multi-line equations}
+  \label{tab:multiline}
+\end{table}
+
+To produce aligned elements using the \code{align*} environment, you should write code like this:
+\begin{verbatim}
+\begin{align*}
+  (1 + x)^{n} &= 1 + n x + \binom{n}{2} x^{2} + \binom{n}{3} x^{3} + \dots \\
+  &= \sum_{k = 0}^{n} \binom{n}{k} x^{k}
+\end{align*}
+\end{verbatim}
+The resulting output will look like this:
+\begin{align*}
+  (1 + x)^{n} &= 1 + n x + \binom{n}{2} x^{2} + \binom{n}{3} x^{3} + \dots \\
+  &= \sum_{k = 0}^{n} \binom{n}{k} x^{k}
+\end{align*}
+
+There are two key elements here.
+The first is the \emph{alignment tab} \code{\&}, which tells \LaTeX{} where to align the lines.
+There should be exactly one of these per line.
+The second is the \emph{line break} \code{\textbackslash{}\textbackslash{}}, which tells \LaTeX{} where to start a new line.
+There should be exactly one of these per line, except for the last line.
+
+\code{multline} and \code{gather} are similar, so we won't give a code sample here.
+Since these environments don't have alignment, they don't use \code{\&}; just include line breaks as appropriate.
+\code{multline} will set the first line to the left, the last line to the right, and center all the other lines; \code{gather} will center all lines.
+
+\subsection{Marking up equations}
+\LaTeX{} provides several features for marking up equations in fancy ways.
+For example, it can produce the brace notation for piecewise functions, using the \code{cases} environment.
+The following code typesets the definition of Thomae's function, which is discontinuous on $\mathbf{Q}$ but continuous on $\mathbf{R} \backslash \mathbf{Q}$ (yikes!):
+\begin{verbatim}
+\begin{equation*}
+  T (x) =
+  \begin{cases}
+    \frac{1}{q}, & x \in \mathbf{Q} \text{ and $x = \frac{p}{q}$ in lowest terms}; \\
+    0, & \text{otherwise}.
+  \end{cases}
+\end{equation*}
+\end{verbatim}
+The output resulting from this code looks like this:
+\begin{equation*}
+  T (x) =
+  \begin{cases}
+    \frac{1}{q}, & x \in \mathbf{Q} \text{ and $x = \frac{p}{q}$ in lowest terms}; \\
+    0, & \text{otherwise}.
+  \end{cases}
+\end{equation*}
+Note the use of the \code{\textbackslash{}text\{\}} command to tell \LaTeX{} to typeset certain things in text mode inside the display environment.
+Without this tweak, we end up with a disaster:
+\begin{equation*}
+  T (x) =
+  \begin{cases}
+    \frac{1}{q}, & x \in \mathbf{Q} and x = \frac{p}{q} in lowest terms; \\
+    0, & otherwise.
+  \end{cases}
+\end{equation*}
+\emph{Don't do this!}
+It is very bad!
+
+\LaTeX{} can also put braces under parts of an expression, which can be useful for explaining a calculation.
+For example, we can indicate $n$-fold addition using an underbrace with the following code:
+\begin{verbatim}
+\begin{equation*}
+  nx = \underbrace{x + x + \dots + x}_{\text{$n$ times}}
+\end{equation*}
+\end{verbatim}
+The resulting output looks like this:
+\begin{equation*}
+  nx = \underbrace{x + x + \dots + x}_{\text{$n$ times}}
+\end{equation*}
+
+\LaTeX{} can also provide multi-line subscripts, as seen in \cref{eq:gcidefperm,eq:gcidefpart}, using the \code{\textbackslash{}substack} command.
+For example, we can indicate a two-index summation using the following code:
+\begin{verbatim}
+\begin{equation*}
+  \sum_{\substack{i \geq 0 \\ j \geq 0}} x^{i} y^{j}
+\end{equation*}
+\end{verbatim}
+The resulting output looks like this:
+\begin{equation*}
+  \sum_{\substack{i \geq 0 \\ j \geq 0}} x^{i} y^{j}
+\end{equation*}
+Note the use of the line break inside the \code{\textbackslash{}substack} to tell \LaTeX{} where to go to the next line.
+
+\subsection{Arrays and matrices}
+\LaTeX{} can also handle matrix and array typesetting.
+The core of this functionality is the \code{matrix} environment, which aligns the entries of a matrix using the alignment tab \code{\&} and line break \code{\textbackslash{}\textbackslash{}}.
+This is extended by several other commands, which put size-appropriate brackets around matrices.
+In particular, \code{pmatrix} gives a matrix surrounded by parenthesis, \code{bmatrix} a matrix surrounded by square brackets, \code{Bmatrix} a matrix surrounded by curly braces, \code{vmatrix} a matrix surrounded by vertical bars, and \code{Vmatrix} a matrix surrounded by double vertical bars.
+
+For example, we can define the standard matrix entry notation using the following code:
+\begin{verbatim}
+\begin{equation*}
+  A_{m,n} =
+  \begin{bmatrix}
+    a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
+    a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
+    \vdots  & \vdots  & \ddots & \vdots  \\
+    a_{m,1} & a_{m,2} & \cdots & a_{m,n}
+  \end{bmatrix}
+\end{equation*}
+\end{verbatim}
+The resulting output looks like this:
+\begin{equation*}
+  A_{m,n} =
+  \begin{bmatrix}
+    a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
+    a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
+    \vdots  & \vdots  & \ddots & \vdots  \\
+    a_{m,1} & a_{m,2} & \cdots & a_{m,n}
+  \end{bmatrix}
+\end{equation*}
+Note the use of \code{\&} and \code{\textbackslash{}\textbackslash{}} to get all the entries in the right place.
+
+There are also starred variants of the \code{matrix} environments which allow you to specify columns manually.
+With this added power, you can change the alignment of entries and add vertical and horizontal separators.
 \end{document}
