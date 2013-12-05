@@ -209,10 +209,10 @@ To produce aligned elements using the \code{align*} environment, you should writ
 \end{align*}
 \end{verbatim}
 The resulting output will look like this:
-\begin{align*}
-  (1 + x)^{n} &= 1 + n x + \binom{n}{2} x^{2} + \binom{n}{3} x^{3} + \dots \\
-  &= \sum_{k = 0}^{n} \binom{n}{k} x^{k}
-\end{align*}
+\begin{align}
+  (1 + x)^{n} &= 1 + n x + \binom{n}{2} x^{2} + \binom{n}{3} x^{3} + \dots \\ \nonumber
+  &= \sum_{k = 0}^{n} \binom{n}{k} x^{k} \label{eq:binom}
+\end{align}
 
 There are two key elements here.
 The first is the \emph{alignment tab} \code{\&}, which tells \LaTeX{} where to align the lines.
@@ -223,6 +223,24 @@ There should be exactly one of these per line, except for the last line.
 \code{multline} and \code{gather} are similar, so we won't give a code sample here.
 Since these environments don't have alignment, they don't use \code{\&}; just include line breaks as appropriate.
 \code{multline} will set the first line to the left, the last line to the right, and center all the other lines; \code{gather} will center all lines.
+
+\subsection{Text within multi-line equations}
+Using the \code{\textbackslash{}intertext} command, it's even possible to inject paragraph text within multi-line equations!
+This is great for explaining the steps of a calculation.
+For example, we can add an explanation in the middle of \cref{eq:binom} by typing the following:
+\begin{verbatim}
+\begin{align*}
+  (1 + x)^{n} &= 1 + n x + \binom{n}{2} x^{2} + \binom{n}{3} x^{3} + \dots \\
+  \intertext{Combining terms then yields}
+  &= \sum_{k = 0}^{n} \binom{n}{k} x^{k}
+\end{align*}
+\end{verbatim}
+The resulting output looks like this:
+\begin{align*}
+  (1 + x)^{n} &= 1 + n x + \binom{n}{2} x^{2} + \binom{n}{3} x^{3} + \dots \\
+  \intertext{Combining terms then yields}
+  &= \sum_{k = 0}^{n} \binom{n}{k} x^{k}
+\end{align*}
 
 \subsection{Marking up equations}
 \LaTeX{} provides several features for marking up equations in fancy ways.
