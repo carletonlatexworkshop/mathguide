@@ -74,4 +74,75 @@ The result should look like this:
 
 \inst{Now try removing the \code{*} symbols from \emph{both} occurences of \code{equation*} and recompiling.}
 The equation should now be numbered.
+
+\section{Writing mathematical expressions}
+Now that you know how to put \LaTeX{} into math mode, you need to know how to type the math.
+As you've already seen, many symbols on your keyboard can be typed directly (as in \enquote{$1 + 1 = 2$} above).
+Other symbols are obtained by giving commands (such as \enquote{\code{\textbackslash{}sum}} in the display example).
+There are many thousands of symbols available to you in \LaTeX{}, so we won't cover them all here, but the ones in \cref{tab:comsymb} should be enough to get you started.
+(Down the road, if you need to find out how to type a particular symbol in \LaTeX{}, the \href{http://detexify.kirelabs.org/classify.html}{De\TeX{}ify} symbol recognizer is a great place to start.)
+
+\begin{table}[htb]
+  \centering
+  \begin{tabular}[htb]{c c @{\hspace{6eX}} c c}
+  \toprule
+  Symbol & Code & Symbol & Code \\ \midrule
+  $\displaystyle\int_{a}^{b}$ & \code{\textbackslash{}int\_{a}\textasciicircum{}{b}} & $\displaystyle\sum_{n = a}^{b}$ & \code{\textbackslash{}sum\_{n = a}\textasciicircum{}{b}} \\
+  $\displaystyle \bigcup_{i = 1}^{4}$ & \code{\textbackslash{}bigcup\_\{i = 1\}\textasciicircum{}\{4\}} & $\displaystyle \bigcap_{i = 1}^{4}$ & \code{\textbackslash{}bigcap\_\{i = 1\}\textasciicircum{}\{4\}}\\
+  $\displaystyle\lim_{x \to a}$ & \code{\textbackslash{}lim\_\{x \textbackslash{}to a\}} & $\displaystyle\frac{a + b}{c + d}$ & \code{\textbackslash{}frac\{a + b\}\{c + d\}} \\
+  $\displaystyle \sqrt{a + b}$ & \code{\textbackslash{}sqrt\{a+b\}} & $\displaystyle \binom{n}{k}$ & \code{\textbackslash{}binom\{n\}\{k\}}\\
+  $x \equiv 4 \pmod a$ & \code{x \textbackslash{}equiv 4 \textbackslash{}pmod a} & $x \bmod a$ & \code{x \textbackslash{}bmod a} \\
+  $\sin, \cos, \tan, \ln, \exp$ & \code{\textbackslash{}sin}, \code{\textbackslash{}cos}, \code{\textbackslash{}tan}, \code{\textbackslash{}ln}, \code{\textbackslash{}exp} & $\leq, \geq$ & \code{\textbackslash{}leq}, \code{\textbackslash{}geq} \\
+  $+, -, \pm, \times, \div, /$ & \code{+}, \code{-}, \code{\textbackslash{}pm}, \code{\textbackslash{}times}, \code{\textbackslash{}div}, \code{/} & $\forall, \exists, \in, \notin$ & \code{\textbackslash{}forall}, \code{\textbackslash{}exists}, \code{\textbackslash{}in}, \code{\textbackslash{}notin} \\
+  $=, \approx, \equiv$ & \code{=}, \code{\textbackslash{}approx}, \code{\textbackslash{}equiv} & $\neq, \not \approx, \not \equiv$ & \code{\textbackslash{}neq}, \code{\textbackslash{}not \textbackslash{}approx}, \code{\textbackslash{}not \textbackslash{}equiv} \\
+  $\subset, \subseteq, \subsetneq$ & \code{\textbackslash{}subset}, \code{\textbackslash{}subseteq}, \code{\textbackslash{}subsetneq} & $\supset, \supseteq, \supsetneq$ & \code{\textbackslash{}supset}, \code{\textbackslash{}supseteq}, \code{\textbackslash{}supsetneq} \\
+  $\partial x, \mathrm{d} x$ & \code{\textbackslash{}partial x}, \code{\textbackslash{}mathrm\{d\} x} & $\hat{x}, \bar{x}, \dot{x}, x'$ & \code{\textbackslash{}hat\{x\}}, \code{\textbackslash{}bar\{x\}}, \code{\textbackslash{}dot\{x\}}, \code{x'} \\
+  $\circ, \oplus, \otimes, \cdot$ & \code{\textbackslash{}circ}, \code{\textbackslash{}oplus}, \code{\textbackslash{}otimes}, \code{\textbackslash{}cdot} & $\cup, \cap$ & \code{\textbackslash{}cup}, \code{\textbackslash{}cap} \\
+  $(, [, \{, \lvert$ & \code{(}, \code{[}, \code{\textbackslash{}\{}, \code{\textbackslash{}lvert} & $), ], \}, \rvert$ & \code{)}, \code{]}, \code{\textbackslash{}\}}, \code{\textbackslash{}rvert} \\
+  $\alpha, \beta, \pi, \dots$ & \code{\textbackslash{}alpha}, \code{\textbackslash{}beta}, \code{\textbackslash{}pi}, \dots & $x^{n}, x_{n}$ & \code{x\textasciicircum{}\{n\}}, \code{x\_\{n\}} \\
+  $\overline{z^{2} - 1}$ & \code{\textbackslash{}overline\{z\textasciicircum{}\{2\} - 1\}} & \\
+  $\mathbf{R}, \mathbb{R}$ & \code{\textbackslash{}mathbf\{R\}}, \code{\textbackslash{}mathbb\{R\}} & $\mathfrak{R}, \mathcal{R}$ & \code{\textbackslash{}mathfrak\{R\}}, \code{\textbackslash{}mathfrak\{R\}}, \code{\textbackslash{}mathcal\{R\}}
+  \\ \bottomrule
+\end{tabular}
+\caption{Collection of common \LaTeX{} math symbols and commands}
+\label{tab:comsymb}
+\end{table}
+
+\subsection*{Delimiter sizes}
+The bracket delimiters ($\{$, $]$, and the like) do not automatically resize by default.
+Thus, you can easily accidentally make a mess, like this:
+\begin{equation}
+  \label{eq:brackexbad}
+  F [ \sum_{j \geq 0}^{5} x^{j} ]
+\end{equation}
+Notice that the brackets around the sum are much too small.
+
+To fix this, you can tell \LaTeX{} to automatically resize these brackets.
+Use the \code{\textbackslash{}left} and \code{\textbackslash{}right} commands to do this.
+For example, if we rewrite \cref{eq:brackexbad} using these:
+\begin{verbatim}
+\begin{equation}
+  F \left[ \sum_{j = 0}^{5} x^{j} \right]
+\end{equation}
+\end{verbatim}
+then we obtain this (much nicer!) output:
+\begin{equation}
+  \label{eq:brackexgood}
+  F \left[ \sum_{j \geq 0}^{5} x^{j} \right]
+\end{equation}
+
+You can also manually specify the size of delimiters if the automatic sizing doesn't work correctly, using the commands \code{\textbackslash{}big}, \code{\textbackslash{}Big}, \code{\textbackslash{}bigg}, and \code{\textbackslash{}Bigg} (in increasing order of bigness) in place of \code{\textbackslash{}left} and \code{\textbackslash{}right}.
+
+Additionally, you can use the \emph{empty delimiter} \enquote{\code{.}} if you want to make a one-sided delimiter scale to the size of its argument.
+For example, the following code produces a nice-looking evaluation for a definite integral:
+\begin{verbatim}
+\begin{equation}
+  \left. \frac{x^{2} - 4}{x - 3} \right\rvert_{1}^{3}
+\end{equation}
+\end{verbatim}
+The resulting output looks like this:
+\begin{equation}
+  \label{eq:evalex}
+  \left. \frac{x^{2} - 4}{x - 3} \right\rvert_{1}^{3}
+\end{equation}
 \end{document}
