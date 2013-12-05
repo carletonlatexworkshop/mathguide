@@ -315,6 +315,12 @@ Note the use of \code{\&} and \code{\textbackslash{}\textbackslash{}} to get all
 There are also starred variants of the \code{matrix} environments which allow you to specify columns manually.
 With this added power, you can change the alignment of entries and add vertical and horizontal separators.
 
+\subsection{Operators}
+As shown in the table above, \LaTeX{} has support for many \emph{operators} such as $\sin$, $\cos$, $\ln$, $\exp$, and $\det$.
+If you need to use one which \LaTeX{} does \emph{not} already support, it's easy to add more.
+For example, in \cref{eq:gcidefperm,eq:gcidefpart}, we used the operator $\operatorname{fix}$, which is obtained simply by typing \code{\textbackslash{}operatorname\{fix\}}.
+(It's important to use \code{\textbackslash{}operatorname} rather than \code{\textbackslash{}text} because the latter won't be spaced correctly.)
+
 \section{Exercises}
 \begin{enumerate}
 \item
@@ -340,6 +346,18 @@ With this added power, you can change the alignment of entries and add vertical 
   \begin{equation*}
     E \sbrac{E \sbrac{X \mid Y}} =
     \sum_{y} \pbrac*{ \sum_{x} x P \pbrac*{ X = x \mid Y = y } } P \pbrac*{ Y = y }
+  \end{equation*}
+
+\item
+  Typeset the following in display mode.
+  \begin{equation*}
+    \det \pbrac*{
+      \begin{bmatrix}
+        a & b \\
+        c & d
+      \end{bmatrix}
+    }
+    = ad - bc
   \end{equation*}
 \end{enumerate}
 \end{document}
